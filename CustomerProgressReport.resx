@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FitnessTrackerProgram_L4DC193_
+{
+    class clsSetGoals
+    {
+      private  int cid, tc;
+      private  String ts;
+      private  DateTime sd, ed;
+
+        public int CustomerID
+        {
+            get
+            {
+                return cid;
+            }
+            set
+            {
+                cid = value;
+            }
+        }
+
+        public int TargetCalories
+        {
+            get
+            {
+                return tc;
+            }
+            set
+            {
+                tc = value;
+            }
+        }
+
+        public string Status
+        {
+            get
+            {
+                return ts;
+            }
+            set
+            {
+                ts = value;
+            }
+        }
+
+        public DateTime StartDate
+        {
+            get
+            {
+                return sd;
+            }
+            set
+            {
+                sd = value;
+            }
+        }
+
+        public DateTime EndDate
+        {
+            get
+            {
+                return ed;
+            }
+            set
+            {
+                ed = value;
+            }
+        }
+    }
+}

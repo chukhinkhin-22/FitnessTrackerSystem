@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace FitnessTrackerProgram_L4DC193_
+{
+    public partial class CustomerProgressReport : Form
+    {
+        dsFitnessTrackerTableAdapters.CustomerTableAdapter cds = new dsFitnessTrackerTableAdapters.CustomerTableAdapter();
+        dsFitnessTrackerTableAdapters.ViewApplyActivityTableAdapter vds = new dsFitnessTrackerTableAdapters.ViewApplyActivityTableAdapter();
+        DataTable dt = new DataTable();
+        DataTable dtt = new DataTable();
+        DataRow dr;
+        DataRow drr;
+        string AActivityID;
+        public CustomerProgressReport()
+        {
+            InitializeComponent();
+        }
+
+        private void CreateDataTable()
+        {
+            dr = dt.NewRow();
+            dt.Columns.Add("Activity Name").ToString();
+            dt.Columns.Add("Unit Calories").ToString();
+            dgvDisplay.DataSource = dt;
+            dgvDisplay.Refresh();
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void CustomerProgressReport_Load(object sender, EventArgs e)
+        {
+            CreateDataTable();
+            DataTable dtt = new DataTable();
+            DataTable adtt = new DataTable();
+            string uid = UserLogin.UserID;
+            dtt = cds.CheckCustomerID(uid);
+            if (dtt.Rows.Count > 0)
+            {
+                int CID = Convert.ToInt32(dtt.Rows[0]["CustomerID"].ToString());
+                adtt = vds.CheckCustomerID(CID);
+                
+                if (adtt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < adtt.Rows.Count; i++)
+                    {
+
+                        dr = dt.NewRow();
+                        dr["Activity Name"] = adtt.Rows[i]["ActivityName"].ToString();
+                        dr["Unit Calories"] = adtt.Rows[i]["UnitCalories"].ToString();
+                        dt.Rows.Add(dr);
+                        dgvDisplay.DataSource = dt;
+
+                    }
+
+                }
+
+            }
+
+
+            dgvDisplay.DataSource = vds.GetData();
+        }
+    }
+}
